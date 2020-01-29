@@ -1,6 +1,7 @@
 project_name = lambda-api-gateway
 role_name = $(project_name)-role
 function_name = $(project_name)-function
+api_name = $(project_name)-rest-api
 
 init:
 	@echo $(project_name) "- my first Lambda function with API Gateway"
@@ -34,3 +35,15 @@ invoke-function:
 	@echo "Response: \n"
 	@cat output.json
 	@echo "\n"
+
+create-api:
+	aws apigateway create-rest-api --name $(api_name)
+	@echo "\nCOPY YOUR REST API ID!"
+
+delete-api:
+	@read -p "Insert your rest api id: " apiId; \
+	aws apigateway delete-rest-api --rest-api-id $$apiId
+
+get-resources-api:
+	@read -p "Insert your rest api id: " apiId; \
+	aws apigateway get-resources --rest-api-id $$apiId
