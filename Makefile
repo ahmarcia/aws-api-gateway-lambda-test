@@ -27,3 +27,10 @@ update-function: create-package account-identity
 	@read -p "Copy and past your number account: " accountId; \
 	aws lambda update-function-code --function-name $(function_name) \
 --zip-file fileb://function.zip
+
+invoke-function:
+	aws lambda invoke --function-name $(function_name) \
+--payload fileb://input.json output.json
+	@echo "Response: \n"
+	@cat output.json
+	@echo "\n"
